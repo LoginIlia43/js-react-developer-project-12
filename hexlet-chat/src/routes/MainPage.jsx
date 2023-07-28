@@ -2,6 +2,9 @@ import React, { useContext, useEffect } from "react";
 import AuthContext from "../components/AuthContext";
 import Button from "react-bootstrap/esm/Button";
 import { useNavigate } from "react-router-dom";
+import { useSelector } from "react-redux";
+import Channels from "../components/Channels";
+import Messages from "../components/Messages";
 
 function MainPage(props) {
     const { fetchData } = props;
@@ -14,7 +17,10 @@ function MainPage(props) {
         } else {
             fetchData();
         };
-    });
+    }, []);
+
+    const { channels } = useSelector((state) => state.channels);
+    const { messages } = useSelector((state) => state.messages);
 
     return (
         <div className="vh-100 d-flex flex-column">
@@ -26,12 +32,12 @@ function MainPage(props) {
                 <div className="row h-100">
                     <div id="channels-container" className="col-4 h-100 border-end py-3">
                         <p className="text-center">Каналы</p>
+                        <Channels channels={channels} />
                     </div>
                     <div id="chat-container" className="col h-100 py-3">
                         <div className="d-flex flex-column h-100">
                             <p className="text-center">Чат канала</p>
-                            <div className="overflow-hidden">
-                            </div>
+                                <Messages messages={messages} />
                             <div className="mt-auto mb-3">
                                 <form >
                                     <div className="d-flex gap-2">
