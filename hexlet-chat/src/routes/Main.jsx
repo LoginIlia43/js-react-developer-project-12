@@ -2,15 +2,32 @@ import React, { useContext, useEffect } from "react";
 import AuthContext from "../components/AuthContext";
 import { useNavigate } from "react-router-dom";
 import Button from "react-bootstrap/esm/Button";
+import axios from "axios";
+import { useDispatch } from "react-redux";
+import { actions as commentsActions } from "../slices/channelsSlice";
 
 function Main() {
     const { isAuthorized } = useContext(AuthContext);
     const navigate = useNavigate();
+    const dispatch = useDispatch();
+    const fetchData = async () => {
+        const token = localStorage.getItem("userToken");
+
+        const { data } = await axios.get("/api/v1/data", {
+            headers: {
+                Authorization: `Bearer ${token}`,
+            },
+        })
+            .catch((e) => console.log(e));
+        dispatch(commentsActions.setChannels(data.channels));
+    }
     useEffect(() => {
         if (!isAuthorized) {
             navigate("/login")
-        }
-    })
+        } else {
+            fetchData();
+        };
+    });
 
     return (
         <div className="vh-100 d-flex flex-column">

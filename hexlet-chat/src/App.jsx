@@ -5,7 +5,6 @@ import Login from './routes/Login';
 import Main from './routes/Main';
 import './App.css';
 import AuthProvider from './components/AuthProvider';
-import { configureStore } from '@reduxjs/toolkit';
 
 function App() {
   return (
