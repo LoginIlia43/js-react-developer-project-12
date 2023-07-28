@@ -1,7 +1,7 @@
 import Button from "react-bootstrap/esm/Button";
 import { useNavigate } from "react-router-dom";
 
-function PageNotFound() {
+function NotFoundPage() {
     const navigate = useNavigate();
     const HandleClick = () => navigate("/");
 
@@ -19,4 +19,4 @@ function PageNotFound() {
     );
 }
 
-export default PageNotFound;
+export default NotFoundPage;

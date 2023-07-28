@@ -1,4 +1,4 @@
-import { createSlice, current } from "@reduxjs/toolkit";
+import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
     channels: [],
@@ -11,8 +11,7 @@ const channelsSlice = createSlice({
         setChannels:
             (state, { payload }) => {
                 state.channels = payload;
-                console.log(current(state))
-        },
+            },
     },
 });
 
