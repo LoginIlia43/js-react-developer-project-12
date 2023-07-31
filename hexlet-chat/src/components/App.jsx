@@ -8,13 +8,24 @@ import LoginPage from '../routes/LoginPage';
 import MainPage from '../routes/MainPage';
 import NotFoundPage from '../routes/NotFoundPage';
 
+import socket from '../socket.js';
+
 import { actions as channelsActions } from "../slices/channelsSlice";
 import { actions as messagesActions } from "../slices/messagesSlice";
 import { actions as currentChannelIdActions } from "../slices/channelIdSlice";
 
 function App() {
-
+  
   const dispatch = useDispatch();
+
+socket.on('newMessage', (message) => {
+  dispatch(messagesActions.addMessage(message));
+});
+
+socket.on("connect_error", (err) => {
+  console.log(`Socket connect_error due to ${err.message}`);
+})
+
 
   const fetchData = async () => {
     const token = localStorage.getItem("userToken");

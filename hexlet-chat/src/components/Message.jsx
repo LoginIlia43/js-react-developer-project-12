@@ -1,9 +1,10 @@
 function Message(props) {
-
+    const { text, id, username } = props;
     return (
-        <li>
-            <p></p>
-        </li>
+        <div key={id} className="d-flex gap-2">
+            <b>{username}:</b>
+            <p>{text}</p>
+        </div>
     )
 }
 

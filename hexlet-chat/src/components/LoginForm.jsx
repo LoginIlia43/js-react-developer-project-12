@@ -29,6 +29,7 @@ function LoginForm() {
                             .then(() => setAuthorized())
                             .then(() => alert("successfull authorization!"))
                             .then(() => navigate("/"))
+                            .then(() => localStorage.setItem("username", username))
                             .catch((e) => setError(e.message));
 
                         }}
