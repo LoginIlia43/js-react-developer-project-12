@@ -1,6 +1,6 @@
 import React, { useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { ErrorMessage, Field, Form, Formik } from "formik";
+import { Field, Form, Formik } from "formik";
 import * as Yup from "yup";
 import axios from "axios";
 import AuthContext from "./AuthContext";
@@ -9,7 +9,7 @@ import Button from "react-bootstrap/Button";
 function LoginForm() {
     const [error, setError] = useState('');
     const navigate = useNavigate();
-    const { isAuthorized, setAuthorized } = useContext(AuthContext);
+    const { setAuthorized } = useContext(AuthContext);
 
     return (
         <div className="container ">
