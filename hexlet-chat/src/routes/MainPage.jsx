@@ -18,7 +18,7 @@ function MainPage(props) {
         } else {
             fetchData();
         };
-    }, []);
+    }, [fetchData, isAuthorized, navigate]);
 
     const { channels } = useSelector((state) => state.channels);
     const { messages } = useSelector((state) => state.messages);
