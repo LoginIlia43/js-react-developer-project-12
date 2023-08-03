@@ -4,7 +4,9 @@ import { actions as channelIdActions } from '../slices/channelIdSlice';
 import { useDispatch } from 'react-redux';
 
 function Channel(props) {
-    const { channelName, id } = props;
+    const { id } = props;
+    const { name, removable } = useSelector((state) => state.channels.entities[id]);
+
     const { currentChannelId } = useSelector((state) => state.currentChannelId);
     const isActiveChannel = id === currentChannelId;
     const dispatch = useDispatch();
@@ -22,7 +24,7 @@ function Channel(props) {
             checked={isActiveChannel}
             onClick={handleClick}
         >
-            {channelName}
+            {name}
         </ToggleButton>
     );
 }

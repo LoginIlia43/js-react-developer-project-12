@@ -1,7 +1,8 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
-    messages: []
+    entities: {},
+    ids: [],
 };
 
 const messagesSlice = createSlice({
@@ -10,11 +11,31 @@ const messagesSlice = createSlice({
     reducers: {
         setMessages:
             (state, { payload }) => {
-                state.messages = payload;
+                const normalizedMessages = {};
+                const ids = [];
+
+                payload.forEach(({ message, username, channelId, id }) => {
+                    normalizedMessages[id] = {
+                        id,
+                        message,
+                        username,
+                        channelId,
+                    };
+                    ids.push(id);
+                });
+                state.entities = normalizedMessages;
+                state.ids = ids;
+                console.log(state.entities);
             },
         addMessage:
             (state, { payload }) => {
-                state.messages.push(payload);
+                const { id, message, username, channelId } = payload;
+                state.entities[id] = {
+                    id,
+                    message,
+                    username,
+                    channelId,
+                };
             },
     },
 });

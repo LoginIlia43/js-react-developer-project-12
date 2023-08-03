@@ -1,7 +1,8 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
-    channels: [],
+    entities: {},
+    ids: [],
 };
 
 const channelsSlice = createSlice({
@@ -10,7 +11,19 @@ const channelsSlice = createSlice({
     reducers: {
         setChannels:
             (state, { payload }) => {
-                state.channels = payload;
+                const normalizedChannels = {};
+                const ids = [];
+
+                payload.forEach(({ id, name, removable }) => {
+                    normalizedChannels[id] = {
+                        id,
+                        name,
+                        removable,
+                    };
+                    ids.push(id);
+                });
+                state.entities = normalizedChannels;
+                state.ids = ids;
             },
     },
 });

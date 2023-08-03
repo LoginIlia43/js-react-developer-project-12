@@ -1,9 +1,13 @@
+import { useSelector } from "react-redux";
+
 function Message(props) {
-    const { text, id, username } = props;
+    const { id } = props;
+    const currentMessage = useSelector((state) => state.messages.entities[id]);
+    const { message, username } = currentMessage;
     return (
         <div key={id} className="d-flex gap-2">
             <b>{username}:</b>
-            <p>{text}</p>
+            <p>{message}</p>
         </div>
     )
 }

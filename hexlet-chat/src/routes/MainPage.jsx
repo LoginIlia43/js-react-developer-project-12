@@ -20,11 +20,12 @@ function MainPage(props) {
         };
     }, [fetchData, isAuthorized, navigate]);
 
-    const { channels } = useSelector((state) => state.channels);
-    const { messages } = useSelector((state) => state.messages);
+    // const channels = useSelector((state) => state.channels.entities);
+    const messages = useSelector((state) => Object.values(state.messages.entities));
     const { currentChannelId } = useSelector((state) => state.currentChannelId);
     const currentChannelMessages = messages.filter((msg) => msg.channelId === currentChannelId);
 
+    // console.log(messages)
     return (
         <div className="h-100 d-flex flex-column">
             <div className="navbar border px-5">
@@ -35,7 +36,7 @@ function MainPage(props) {
                 <div className="row h-100">
                     <div id="channels-container" className="col-4 h-100 border-end py-3">
                         <p className="text-center">Каналы</p>
-                        <Channels channels={channels} />
+                        <Channels />
                     </div>
                     <div id="chat-container" className="col h-100 py-3">
                         <div className="d-flex flex-column h-100">
