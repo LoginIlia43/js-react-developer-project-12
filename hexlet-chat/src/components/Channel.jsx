@@ -24,7 +24,7 @@ function Channel(props) {
             checked={isActiveChannel}
             onClick={handleClick}
         >
-            {name}
+            # {name}
         </ToggleButton>
     );
 }

@@ -34,8 +34,13 @@ function MainPage(props) {
             </div>
             <div className="container border h-100 my-4 overflow-hidden">
                 <div className="row h-100">
-                    <div id="channels-container" className="col-4 h-100 border-end py-3">
-                        <p className="text-center">Каналы</p>
+                    <div id="channels-container" className="col-4 h-100 border-end py-3" style={{maxWidth: "260px"}}>
+                        <div className="d-flex justify-content-between">
+                            <p className="text-center">Каналы</p>
+                            <div>
+                                <Button variant="outline-primary" size="sm">+</Button>
+                            </div>
+                        </div>
                         <Channels />
                     </div>
                     <div id="chat-container" className="col h-100 py-3">
