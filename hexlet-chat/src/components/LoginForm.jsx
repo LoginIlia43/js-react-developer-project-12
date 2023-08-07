@@ -12,7 +12,7 @@ function LoginForm() {
     const { setAuthorized } = useContext(AuthContext);
 
     return (
-        <div className="container ">
+        <div className="container">
             <div className="text-center">
                 <h1 className="">Авторизация</h1>
             </div>
@@ -38,7 +38,7 @@ function LoginForm() {
                         <Form className="col-lg-6 border py-2">
                             <div className="py-2">
                                 <label className="form-label">Введите имя:</label>
-                                <Field className="form-control" type="text" name="username" />
+                                <Field className="form-control" type="text" name="username" autoFocus />
                             </div>
                             <div className="py-2">
                                 <label className="form-label">Введите пароль:</label>

@@ -1,7 +1,13 @@
-import ToggleButton from 'react-bootstrap/ToggleButton';
-import { useSelector } from 'react-redux';
-import { actions as channelIdActions } from '../slices/channelIdSlice';
-import { useDispatch } from 'react-redux';
+import ToggleButton from "react-bootstrap/ToggleButton";
+import ButtonGroup from "react-bootstrap/esm/ButtonGroup";
+import DropdownButton from "react-bootstrap/esm/DropdownButton";
+import Dropdown from "react-bootstrap/Dropdown";
+
+import { useSelector } from "react-redux";
+import { actions as channelIdActions } from "../slices/channelIdSlice";
+import { useDispatch } from "react-redux";
+
+import { actions as modalActions } from "../slices/modalSlice";
 
 function Channel(props) {
     const { id } = props;
@@ -15,17 +21,45 @@ function Channel(props) {
         dispatch(channelIdActions.setCurrentChannelId(id));
     };
 
+    const handleRename = () => {
+        dispatch(modalActions.toggleIsShow());
+        dispatch(modalActions.setType("renameChannel"));
+        dispatch(modalActions.setId(id));
+    };
+
+    const handleRemove = (e) => {
+    };
+
     return (
-        <ToggleButton
-            type="radio"
-            variant="outline-secondary"
-            id={id}
-            className='btn w-100 border-0 rounded-0'
-            checked={isActiveChannel}
-            onClick={handleClick}
-        >
-            # {name}
-        </ToggleButton>
+        <ButtonGroup id={id}>
+            <ToggleButton
+                type="radio"
+                variant="outline-secondary"
+                className='btn w-100 border-0 rounded-0'
+                checked={isActiveChannel}
+                onClick={handleClick}
+            >
+                # {name}
+            </ToggleButton>
+            {removable ?
+                <DropdownButton 
+                    as={ButtonGroup}
+                    size="sm"
+                    title=""
+                    variant={isActiveChannel ? "secondary rounded-0" : "shadow rounded-0"}>
+                    <Dropdown.Item
+                        onClick={handleRemove}
+                    >
+                        Удалить
+                    </Dropdown.Item>
+                    <Dropdown.Item
+                        onClick={handleRename}
+                    >
+                        Переименовать
+                    </Dropdown.Item>
+                </DropdownButton> : null}
+
+        </ButtonGroup>
     );
 }
 

@@ -9,7 +9,7 @@ function Messages(props) {
         const sH = messagesContainer.scrollHeight;
         messagesContainer.scrollTo(0, sH);
     }, [messages]);
-    
+
     return (
         <div id="messages-container" className="h-100 overflow-auto my-3">
             {messages.map(({ id }) => <Message key={id} id={id} /> )}

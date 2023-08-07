@@ -25,7 +25,6 @@ const messagesSlice = createSlice({
                 });
                 state.entities = normalizedMessages;
                 state.ids = ids;
-                console.log(state.entities);
             },
         addMessage:
             (state, { payload }) => {

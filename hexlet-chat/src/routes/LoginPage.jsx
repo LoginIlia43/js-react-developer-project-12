@@ -3,7 +3,7 @@ import LoginForm from "../components/LoginForm";
 
 function LoginPage() {
     return (
-        <div>
+        <div className="h-100 d-flex align-items-center">
             <LoginForm />
         </div>
     )

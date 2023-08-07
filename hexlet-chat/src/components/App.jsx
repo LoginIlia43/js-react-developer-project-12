@@ -20,12 +20,19 @@ function App() {
 
 socket.on('newMessage', (message) => {
   dispatch(messagesActions.addMessage(message));
-});
+});;
 
 socket.on("connect_error", (err) => {
   console.log(`Socket connect_error due to ${err.message}`);
-})
+});
 
+socket.on("renameChannel", (channel) => {
+  dispatch(channelsActions.renameChannel(channel));
+});
+
+socket.on("newChannel", (channelWithId) => {
+  dispatch(channelsActions.newChannel(channelWithId));
+});
 
   const fetchData = async () => {
     const token = localStorage.getItem("userToken");
