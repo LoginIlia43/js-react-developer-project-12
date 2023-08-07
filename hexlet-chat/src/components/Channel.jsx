@@ -27,7 +27,11 @@ function Channel(props) {
         dispatch(modalActions.setId(id));
     };
 
-    const handleRemove = (e) => {
+    const handleRemove = () => {
+        dispatch(modalActions.toggleIsShow());
+        dispatch(modalActions.setType("removeChannel"));
+        dispatch(modalActions.setId(id));
+
     };
 
     return (
@@ -35,7 +39,7 @@ function Channel(props) {
             <ToggleButton
                 type="radio"
                 variant="outline-secondary"
-                className='btn w-100 border-0 rounded-0'
+                className='btn w-100 border-0 rounded-0 text-break'
                 checked={isActiveChannel}
                 onClick={handleClick}
             >

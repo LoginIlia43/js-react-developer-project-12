@@ -34,6 +34,10 @@ socket.on("newChannel", (channelWithId) => {
   dispatch(channelsActions.newChannel(channelWithId));
 });
 
+socket.on("removeChannel", (data) => {
+  dispatch(channelsActions.removeChannel(data));
+});
+
   const fetchData = async () => {
     const token = localStorage.getItem("userToken");
     const { data } = await axios.get("/api/v1/data", {

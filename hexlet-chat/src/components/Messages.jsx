@@ -11,7 +11,7 @@ function Messages(props) {
     }, [messages]);
 
     return (
-        <div id="messages-container" className="h-100 overflow-auto my-3">
+        <div id="messages-container" className="h-100 w-100 overflow-auto my-3">
             {messages.map(({ id }) => <Message key={id} id={id} /> )}
         </div>
     )

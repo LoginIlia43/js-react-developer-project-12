@@ -18,13 +18,13 @@ function ModalComponent() {
     const titles = {
         addChannel: "Добавить канал",
         renameChannel: "Переименовать канал",
-        deleteChannel: "Удалить канал",
+        removeChannel: "Удалить канал",
     };
 
     const dispatchModalChildren = {
         addChannel: <ModalAddChannel handleClose={handleClose} />,
         renameChannel: <ModalRenameChannel handleClose={handleClose} />,
-        deleteChannel: <ModalDeleteChannel handleClose={handleClose} />,
+        removeChannel: <ModalRemoveChannel handleClose={handleClose} />,
     };
 
     return (
@@ -43,7 +43,6 @@ function ModalAddChannel(props) {
     const [error, setError] = useState(null);
 
     const { handleClose } = props;
-    const id = useSelector(state => state.modal.channelId);
     const channels = Object
         .values(useSelector(state => state.channels.entities))
         .map(({ name }) => name);
@@ -57,7 +56,7 @@ function ModalAddChannel(props) {
             setError("Такое имя уже существует!");
         } else {
             setError(null);
-            socket.emit("newChannel", ({ "name": name }));
+            socket.emit("newChannel", ({ "name": name, "author": localStorage.getItem("username") }));
             handleClose();
         }
     };
@@ -132,15 +131,28 @@ function ModalRenameChannel(props) {
         </>
     )
 }
-function ModalDeleteChannel(props) {
+function ModalRemoveChannel(props) {
     const { handleClose } = props;
+
+    const id = useSelector(state => state.modal.channelId);
+
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        socket.emit("removeChannel", { "id": id });
+        handleClose();
+    }
 
     return (
         <>
-        <form id="channel-delete-form">
+        <form id="channel-delete-form" onSubmit={handleSubmit}>
             <div className="d-flex gap-2 justify-content-end mt-3">
                 <Button variant="secondary" onClick={handleClose}>Отменить</Button>
-                <Button>Подтвердить</Button>
+                <Button
+                    variant="primary"
+                    type="submit"
+                >
+                    Подтвердить
+                </Button>
             </div>
         </form>
         </>

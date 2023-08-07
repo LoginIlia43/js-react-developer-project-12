@@ -53,11 +53,9 @@ function MainPage(props) {
                 </div>
                 <div className="container border h-100 my-4 overflow-hidden shadow">
                     <div className="row h-100">
-                        <div id="channels-container"
-                            className="col-4
-                            h-100
-                            border-end
-                            py-3"
+                        <div
+                            id="channels-container"
+                            className="col-4 h-100 border-end py-3 overflow-y-auto"
                             style={{maxWidth: "260px"}}
                         >
                             <div className="d-flex justify-content-between">

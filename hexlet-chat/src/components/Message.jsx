@@ -7,7 +7,7 @@ function Message(props) {
     return (
         <div key={id} className="d-flex gap-2">
             <b>{username}:</b>
-            <p>{message}</p>
+            <p className="text-break">{message}</p>
         </div>
     )
 }
