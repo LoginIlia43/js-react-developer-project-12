@@ -13,9 +13,6 @@ function LoginForm() {
 
     return (
         <div className="container">
-            <div className="text-center">
-                <h1 className="">Авторизация</h1>
-            </div>
                 <Formik
                     initialValues={{
                         username: "",
@@ -30,23 +27,41 @@ function LoginForm() {
                             .then(() => alert("successfull authorization!"))
                             .then(() => navigate("/"))
                             .then(() => localStorage.setItem("username", username))
-                            .catch((e) => setError(e.message));
+                            .catch((e) => setError(
+                                e.response.status === 401 ? "Неверные имя пользователя или пароль" : "Ошибка сети"
+                            ));
 
                         }}
                 >
                     <div className="row justify-content-center">
-                        <Form className="col-lg-6 border py-2">
+                        <Form className="col-lg-6 border py-2 shadow-sm">
+                            <h1 className="text-center">Войти</h1>
                             <div className="py-2">
-                                <label className="form-label">Введите имя:</label>
-                                <Field className="form-control" type="text" name="username" autoFocus />
+                                <Field
+                                    className="form-control"
+                                    type="text"
+                                    name="username"
+                                    placeholder="Ваш ник"
+                                    required
+                                    autoFocus />
                             </div>
                             <div className="py-2">
-                                <label className="form-label">Введите пароль:</label>
-                                <Field className="form-control" type="password" name="password" />
+                                <Field
+                                    className="form-control"
+                                    type="password"
+                                    name="password"
+                                    placeholder="Пароль"
+                                    required />
                             </div>
                             {error ? <p className="text-danger my-0">{error}</p> : null}
                             <div className="text-center py-2">
-                                <Button className="px-4" variant="primary" type="submit">Войти</Button>
+                                <Button 
+                                    className="px-4 w-100"
+                                    variant="outline-primary"
+                                    type="submit"
+                                >
+                                    Войти
+                                </Button>
                             </div>
                         </Form>
                     </div>
@@ -56,10 +71,8 @@ function LoginForm() {
 }
 
 const loginSchema = Yup.object().shape({
-    login: Yup.string()
-        .min(1, "too short"),
-    password: Yup.string()
-        .min(1, "too short")
+    username: Yup.string().required(),
+    password: Yup.string().required(),
 });
 
 export default LoginForm;

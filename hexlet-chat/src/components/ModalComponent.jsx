@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import socket from "../socket";
 
@@ -69,6 +69,8 @@ function ModalAddChannel(props) {
                 type="text"
                 placeholder="Введите название канала..."
                 name="name"
+                required
+                // autoFocus={true}
                 />
             {error ? <div className="text-danger pt-3">{error}</div> : null }
             <div className="d-flex gap-2 justify-content-end mt-3">
@@ -90,6 +92,8 @@ function ModalRenameChannel(props) {
 
     const { handleClose } = props;
     const id = useSelector(state => state.modal.channelId);
+    const channelName = useSelector(state => state.channels.entities[id].name);
+
     const channels = Object
         .values(useSelector(state => state.channels.entities))
         .map(({ name }) => name);
@@ -114,8 +118,10 @@ function ModalRenameChannel(props) {
             <Form.Control
                 className="w-100 px-2 py-1 border rounded-3"
                 type="text"
-                placeholder="Введите название канала..."
+                defaultValue={channelName}
                 name="name"
+                required
+                autoFocus={true}
                 />
             {error ? <div className="text-danger pt-3">{error}</div> : null }
             <div className="d-flex gap-2 justify-content-end mt-3">
@@ -123,6 +129,7 @@ function ModalRenameChannel(props) {
                 <Button
                     variant="primary"
                     type="submit"
+                    autoFocus
                 >
                     Подтвердить
                 </Button>
@@ -145,6 +152,7 @@ function ModalRemoveChannel(props) {
     return (
         <>
         <form id="channel-delete-form" onSubmit={handleSubmit}>
+            <div>Уверены?</div>
             <div className="d-flex gap-2 justify-content-end mt-3">
                 <Button variant="secondary" onClick={handleClose}>Отменить</Button>
                 <Button

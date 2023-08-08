@@ -12,6 +12,7 @@ import MessageForm from "../components/MessageForm";
 import ModalComponent from "../components/ModalComponent";
 
 import { actions as modalActions } from "../slices/modalSlice";
+import HeaderComponent from "../components/HeaderComponent";
 
 function MainPage(props) {
     const { fetchData } = props;
@@ -36,21 +37,11 @@ function MainPage(props) {
         dispatch(modalActions.setType("addChannel"));
     };
 
-    const handleExitClick = () => {
-        localStorage.clear();
-        navigate("/login");
-    };
-
     return (
         <>
             <ModalComponent />
             <div className="h-100 d-flex flex-column">
-                <div className="navbar border px-5 shadow-sm">
-                    <div className="container">
-                        <a href="/" className="navbar-brand">Hexlet Chat</a>
-                        <Button className="btn navbar-bth" onClick={handleExitClick}>Выйти</Button>
-                    </div>
-                </div>
+                <HeaderComponent />
                 <div className="container border h-100 my-4 overflow-hidden shadow">
                     <div className="row h-100">
                         <div

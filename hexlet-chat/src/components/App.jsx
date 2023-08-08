@@ -7,6 +7,7 @@ import axios from "axios";
 import LoginPage from '../routes/LoginPage';
 import MainPage from '../routes/MainPage';
 import NotFoundPage from '../routes/NotFoundPage';
+import SignUpPage from '../routes/SignUpPage';
 
 import socket from '../socket.js';
 
@@ -57,8 +58,9 @@ socket.on("removeChannel", (data) => {
       <BrowserRouter>
         <Routes>
           <Route path="*" element={<NotFoundPage />} />
-          <Route path='/' element={<MainPage fetchData={fetchData} />} />
+          <Route path="/" element={<MainPage fetchData={fetchData} />} />
           <Route path="/login" element={<LoginPage />} />
+          <Route path="/signup" element={<SignUpPage />} />
         </Routes>
       </BrowserRouter>
     </AuthProvider>
