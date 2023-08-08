@@ -5,11 +5,13 @@ import * as Yup from "yup";
 import axios from "axios";
 import AuthContext from "./AuthContext";
 import Button from "react-bootstrap/Button";
+import { useTranslation } from "react-i18next";
 
 function SignUpForm() {
     const [error, setError] = useState('');
     const navigate = useNavigate();
     const { setAuthorized } = useContext(AuthContext);
+    const { t } = useTranslation();
 
     return (
         <div className="container">
@@ -25,7 +27,6 @@ function SignUpForm() {
                             .post('/api/v1/signup', { username, password })
                             .then((response) => localStorage.setItem("userToken", response.data.token))
                             .then(() => setAuthorized())
-                            .then(() => alert("successfull authorization!"))
                             .then(() => navigate("/"))
                             .then(() => localStorage.setItem("username", username))
                             .catch((e) => setError(
@@ -38,13 +39,13 @@ function SignUpForm() {
                         return (
                     <div className="row justify-content-center">
                         <Form className="col-lg-6 border py-2">
-                            <h1 className="text-center">Регистрация</h1>
+                            <h1 className="text-center">{t("register.header")}</h1>
                             <div className="py-2">
                                 <Field
                                     className="form-control"
                                     type="text"
                                     name="username"
-                                    placeholder="Имя пользователя"
+                                    placeholder={t("register.username")}
                                     autoFocus
                                     required />
                             </div>
@@ -55,7 +56,7 @@ function SignUpForm() {
                                     className="form-control"
                                     type="password"
                                     name="password"
-                                    placeholder="Пароль"
+                                    placeholder={t("register.password")}
                                     required />
                             </div>
                             {errors.password && touched.password &&
@@ -65,7 +66,7 @@ function SignUpForm() {
                                     className="form-control"
                                     type="password"
                                     name="password2"
-                                    placeholder="Подтвердите пароль"
+                                    placeholder={t("register.confirmPassword")}
                                     required />
                             </div>
                             {errors.password2 && touched.password2 &&
@@ -77,7 +78,7 @@ function SignUpForm() {
                                     variant="outline-primary"
                                     type="submit"
                                 >
-                                    Зарегистрироваться
+                                    {t("register.registerBtn")}
                                 </Button>
                             </div>
                         </Form>

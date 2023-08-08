@@ -5,11 +5,13 @@ import * as Yup from "yup";
 import axios from "axios";
 import AuthContext from "./AuthContext";
 import Button from "react-bootstrap/Button";
+import { useTranslation } from "react-i18next";
 
 function LoginForm() {
     const [error, setError] = useState('');
     const navigate = useNavigate();
     const { setAuthorized } = useContext(AuthContext);
+    const { t } = useTranslation();
 
     return (
         <div className="container">
@@ -24,7 +26,6 @@ function LoginForm() {
                             .post('/api/v1/login', { username, password })
                             .then((response) => localStorage.setItem("userToken", response.data.token))
                             .then(() => setAuthorized())
-                            .then(() => alert("successfull authorization!"))
                             .then(() => navigate("/"))
                             .then(() => localStorage.setItem("username", username))
                             .catch((e) => setError(
@@ -35,13 +36,13 @@ function LoginForm() {
                 >
                     <div className="row justify-content-center">
                         <Form className="col-lg-6 border py-2 shadow-sm">
-                            <h1 className="text-center">Войти</h1>
+                            <h1 className="text-center">{t("login.header")}</h1>
                             <div className="py-2">
                                 <Field
                                     className="form-control"
                                     type="text"
                                     name="username"
-                                    placeholder="Ваш ник"
+                                    placeholder={t("login.username")}
                                     required
                                     autoFocus />
                             </div>
@@ -50,7 +51,7 @@ function LoginForm() {
                                     className="form-control"
                                     type="password"
                                     name="password"
-                                    placeholder="Пароль"
+                                    placeholder={t("login.password")}
                                     required />
                             </div>
                             {error ? <p className="text-danger my-0">{error}</p> : null}
@@ -60,7 +61,7 @@ function LoginForm() {
                                     variant="outline-primary"
                                     type="submit"
                                 >
-                                    Войти
+                                    {t("login.enter")}
                                 </Button>
                             </div>
                         </Form>

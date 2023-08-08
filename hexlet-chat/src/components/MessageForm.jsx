@@ -3,10 +3,12 @@ import Button from "react-bootstrap/esm/Button";
 import socket from "../socket.js";
 import { useSelector } from "react-redux";
 import { useEffect } from "react";
+import { useTranslation } from "react-i18next";
 
 function MessageForm() {
     const username = localStorage.getItem("username");
     const { currentChannelId } = useSelector((state) => state.currentChannelId);
+    const { t } = useTranslation();
 
     useEffect(() => {
         document.getElementById("message-form-input").focus();
@@ -39,10 +41,10 @@ function MessageForm() {
                                 className="w-100 flex-grow-1 px-2 border rounded-3"
                                 type="text"
                                 name="message"
-                                placeholder="Введите сообщение..."
+                                placeholder={t("mainP.messageInput")}
                                 required />
                             <Button type="submit" disabled={isSubmitting}>
-                                Отправить
+                                {t("mainP.sendBtn")}
                             </Button>
                         </div>
                     </Form>
