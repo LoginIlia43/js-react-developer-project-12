@@ -55,7 +55,6 @@ const messagesSlice = createSlice({
                     };
                 })
             state.entities = normalizedMessages;
-            console.log(state.entities)
             state.ids = Object.keys(state.entities).map(key => Number(key));
         });
     }

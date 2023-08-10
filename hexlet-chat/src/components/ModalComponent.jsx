@@ -1,12 +1,15 @@
-import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import socket from "../socket";
+import * as Yup from "yup";
 
 import Modal from "react-bootstrap/esm/Modal";
 import Button from "react-bootstrap/esm/Button";
-import Form from "react-bootstrap/esm/Form"
+import { Formik, Form, Field } from "formik"
 
 import { actions as modalActions } from "../slices/modalSlice";
+
+import { useTranslation } from "react-i18next";
+import { notifySuccess } from "../notify.js";
 
 function ModalComponent() {
     const modalType = useSelector(state => state.modal.type);
@@ -40,130 +43,176 @@ function ModalComponent() {
 }
 
 function ModalAddChannel(props) {
-    const [error, setError] = useState(null);
+    const { t } = useTranslation();
 
     const { handleClose } = props;
     const channels = Object
         .values(useSelector(state => state.channels.entities))
         .map(({ name }) => name);
 
-    const handleSubmit = (e) => {
-        e.preventDefault();
-        const formData = new FormData(e.target);
-        const { name } = Object.fromEntries(formData.entries());
-        const isNameExist = Boolean(channels.includes(name));
-        if (isNameExist) {
-            setError("Такое имя уже существует!");
-        } else {
-            setError(null);
-            socket.emit("newChannel", ({ "name": name, "author": localStorage.getItem("username") }));
-            handleClose();
-        }
-    };
+    const channelSchema = Yup.object().shape({
+        channel: Yup.string()
+            .required("")
+            .min(3, t("validation.from3to20"))
+            .max(20, t("validation.from3to20"))
+            .notOneOf([...channels, null], t("validation.unique")),
+    });
 
     return (
         <>
-        <Form id="channel-add-form" onSubmit={handleSubmit}>
-            <Form.Control
-                className="w-100 px-2 py-1 border rounded-3"
-                type="text"
-                placeholder="Введите название канала..."
-                name="name"
-                required
-                // autoFocus={true}
-                />
-            {error ? <div className="text-danger pt-3">{error}</div> : null }
-            <div className="d-flex gap-2 justify-content-end mt-3">
-                <Button variant="secondary" onClick={handleClose}>Отменить</Button>
-                <Button
-                    variant="primary"
-                    type="submit"
-                >
-                    Подтвердить
-                </Button>
-            </div>
-        </Form>
+            <Formik
+            initialValues={{
+                channel: "",
+            }}
+            validationSchema={channelSchema}
+            onSubmit={({ channel }, { setSubmitting, resetForm }) => {
+                socket.emit("newChannel", ({ "name": channel, "author": localStorage.getItem("username") }));
+                setSubmitting(false);
+                resetForm();
+                handleClose();
+                notifySuccess(t("notify.add"));
+            }}
+            >
+                {({ errors, touched, isSubmitting }) => {
+                    return (
+                        <Form id="channel-add-form">
+                            <Field
+                                className="form-control"
+                                type="text"
+                                placeholder={t("mainP.channelNameInput")}
+                                name="channel"
+                                required
+                                autoComplete="off"
+                                autoFocus
+                                />
+                                {console.log(touched.channel)}
+                            {errors.channel && touched.channel && <div className="text-danger pt-3">{errors.channel}</div>}
+                            <div className="d-flex gap-2 justify-content-end mt-3">
+                                <Button
+                                    variant="secondary"
+                                    onClick={handleClose}
+                                >
+                                    Отменить
+                                </Button>
+                                <Button
+                                    variant="primary"
+                                    type="submit"
+                                    disabled={isSubmitting}
+                                >
+                                    Подтвердить
+                                </Button>
+                            </div>
+                        </Form>
+                    )}
+                }
+            </Formik>
         </>
     )
 }
 
 function ModalRenameChannel(props) {
-    const [error, setError] = useState(null);
+    const { t } = useTranslation();
 
     const { handleClose } = props;
-    const id = useSelector(state => state.modal.channelId);
-    const channelName = useSelector(state => state.channels.entities[id].name);
-
     const channels = Object
         .values(useSelector(state => state.channels.entities))
         .map(({ name }) => name);
 
-    const handleSubmit = (e) => {
-        e.preventDefault();
-        const formData = new FormData(e.target);
-        const { name } = Object.fromEntries(formData.entries());
-        const isNameExist = Boolean(channels.includes(name));
-        if (isNameExist) {
-            setError("Такое имя уже существует!");
-        } else {
-            setError(null);
-            socket.emit("renameChannel", ({ "id": id, "name": name }));
-            handleClose();
-        }
-    };
-
-    return (
-        <>
-        <Form id="channel-rename-form" onSubmit={handleSubmit}>
-            <Form.Control
-                className="w-100 px-2 py-1 border rounded-3"
-                type="text"
-                defaultValue={channelName}
-                name="name"
-                required
-                autoFocus={true}
-                />
-            {error ? <div className="text-danger pt-3">{error}</div> : null }
-            <div className="d-flex gap-2 justify-content-end mt-3">
-                <Button variant="secondary" onClick={handleClose}>Отменить</Button>
-                <Button
-                    variant="primary"
-                    type="submit"
-                    autoFocus
-                >
-                    Подтвердить
-                </Button>
-            </div>
-        </Form>
-        </>
-    )
-}
-function ModalRemoveChannel(props) {
-    const { handleClose } = props;
-
     const id = useSelector(state => state.modal.channelId);
 
-    const handleSubmit = (e) => {
-        e.preventDefault();
-        socket.emit("removeChannel", { "id": id });
-        handleClose();
-    }
+    const channelSchema = Yup.object().shape({
+        name: Yup.string()
+            .required(t("validation.required"))
+            .min(3, t("validation.from3to20"))
+            .max(20, t("validation.from3to20"))
+            .notOneOf(channels, t("validation.unique"))
+    });
 
     return (
         <>
-        <form id="channel-delete-form" onSubmit={handleSubmit}>
-            <div>Уверены?</div>
-            <div className="d-flex gap-2 justify-content-end mt-3">
-                <Button variant="secondary" onClick={handleClose}>Отменить</Button>
-                <Button
-                    variant="primary"
-                    type="submit"
-                >
-                    Подтвердить
-                </Button>
-            </div>
-        </form>
+            <Formik
+            autoFocus={false}
+            initialValues={{
+                name:"",
+            }}
+            validationSchema={channelSchema}
+            onSubmit={({ name }, { setSubmitting, resetForm }) => {
+                socket.emit("renameChannel", ({ "id": id, "name": name }));
+                setSubmitting(false);
+                resetForm();
+                handleClose();
+                notifySuccess(t("notify.rename"));
+            }}
+            >
+                {({ errors, touched, isSubmitting }) => {
+                    return (
+                        <Form id="channel-rename-form" autoFocus={false}>
+                            <Field
+                                className="form-control"
+                                type="text"
+                                placeholder={t("mainP.channelNameInput")}
+                                name="name"
+                                autoComplete="off"
+                                required
+                                autoFocus
+                            />
+                            {errors.name && touched.name && <div className="text-danger pt-3">{errors.name}</div>}
+                            <div className="d-flex gap-2 justify-content-end mt-3">
+                                <Button variant="secondary" onClick={handleClose}>Отменить</Button>
+                                <Button
+                                    variant="primary"
+                                    type="submit"
+                                    disabled={isSubmitting}
+                                >
+                                    Подтвердить
+                                </Button>
+                            </div>
+                        </Form>
+                    )}
+                }
+            </Formik>
         </>
     )
 }
+
+function ModalRemoveChannel(props) {
+    const { handleClose } = props;
+    const { t } = useTranslation();
+    const id = useSelector(state => state.modal.channelId);
+
+    return (
+        <>
+            <Formik
+            initialValues={{
+                id,
+            }}
+                onSubmit={({ id }, { setSubmitting }) => {
+                    socket.emit("removeChannel", { "id": id });
+                    setSubmitting(false);
+                    handleClose();
+                    notifySuccess(t("notify.remove"));
+                }}
+            >
+                {({ isSubmitting }) => {
+                    return (
+                        <Form id="channel-remove-form">
+                            <div>Уверены?</div>
+                            <div className="d-flex gap-2 justify-content-end mt-3">
+                                <Button variant="secondary" onClick={handleClose}>Отменить</Button>
+                                <Button
+                                    variant="primary"
+                                    type="submit"
+                                    disabled={isSubmitting}
+                                >
+                                    Подтвердить
+                                </Button>
+                            </div>
+                        </Form>
+                    )
+                }}
+            </Formik>
+        </>
+    )
+}
+
 export default ModalComponent;

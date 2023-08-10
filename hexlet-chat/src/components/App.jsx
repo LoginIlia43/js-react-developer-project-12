@@ -15,6 +15,8 @@ import { actions as channelsActions } from "../slices/channelsSlice";
 import { actions as messagesActions } from "../slices/messagesSlice";
 import { actions as currentChannelIdActions } from "../slices/channelIdSlice";
 
+import { ToastContainer } from 'react-toastify';
+
 function App() {
   
   const dispatch = useDispatch();
@@ -56,6 +58,7 @@ socket.on("removeChannel", (data) => {
   return (
     <AuthProvider>
       <BrowserRouter>
+      <ToastContainer />
         <Routes>
           <Route path="*" element={<NotFoundPage />} />
           <Route path="/" element={<MainPage fetchData={fetchData} />} />

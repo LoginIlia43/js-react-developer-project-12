@@ -6,6 +6,7 @@ import axios from "axios";
 import AuthContext from "./AuthContext";
 import Button from "react-bootstrap/Button";
 import { useTranslation } from "react-i18next";
+import { notifyError } from "../notify";
 
 function LoginForm() {
     const [error, setError] = useState('');
@@ -28,10 +29,13 @@ function LoginForm() {
                             .then(() => setAuthorized())
                             .then(() => navigate("/"))
                             .then(() => localStorage.setItem("username", username))
-                            .catch((e) => setError(
-                                e.response.status === 401 ? "Неверные имя пользователя или пароль" : "Ошибка сети"
-                            ));
-
+                            .catch((e) => {
+                                if (e.response.status === 401) {
+                                    setError(t("validation.nameOrPass"));
+                                } else {
+                                    notifyError(t("errors.connection"))
+                                }
+                            });
                         }}
                 >
                     <div className="row justify-content-center">

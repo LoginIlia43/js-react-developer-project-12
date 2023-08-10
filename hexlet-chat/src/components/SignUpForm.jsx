@@ -6,12 +6,25 @@ import axios from "axios";
 import AuthContext from "./AuthContext";
 import Button from "react-bootstrap/Button";
 import { useTranslation } from "react-i18next";
+import { notifyError } from "../notify";
 
 function SignUpForm() {
     const [error, setError] = useState('');
     const navigate = useNavigate();
     const { setAuthorized } = useContext(AuthContext);
     const { t } = useTranslation();
+    
+    const signUpSchema = Yup.object().shape({
+        username: Yup.string()
+            .required(t("validation.required"))
+            .min(3, t("validation.from3to20"))
+            .max(20, t("validation.from3to20")),
+        password: Yup.string()
+            .required(t("validation.required"))
+            .min(6, t("validation.from6")),
+        password2: Yup.string()
+            .oneOf([Yup.ref('password'), null], t("validation.passwords")),
+    });
 
     return (
         <div className="container">
@@ -29,13 +42,16 @@ function SignUpForm() {
                             .then(() => setAuthorized())
                             .then(() => navigate("/"))
                             .then(() => localStorage.setItem("username", username))
-                            .catch((e) => setError(
-                                e.response.status === 409 ? "Пользователь уже существует" : "Ошибка сети"
-                                )
-                            );
+                            .catch((e) => {
+                                if (e.response.status === 409) {
+                                    setError(t("validation.userExist"));
+                                } else {
+                                    notifyError(t("errors.connection"));
+                                }
+                            });
                         }}
                 >
-                    {({ errors, touched}) => {
+                    {({ errors, touched }) => {
                         return (
                     <div className="row justify-content-center">
                         <Form className="col-lg-6 border py-2">
@@ -46,6 +62,7 @@ function SignUpForm() {
                                     type="text"
                                     name="username"
                                     placeholder={t("register.username")}
+                                    autoComplete="off"
                                     autoFocus
                                     required />
                             </div>
@@ -57,6 +74,7 @@ function SignUpForm() {
                                     type="password"
                                     name="password"
                                     placeholder={t("register.password")}
+                                    autoComplete="off"
                                     required />
                             </div>
                             {errors.password && touched.password &&
@@ -67,6 +85,7 @@ function SignUpForm() {
                                     type="password"
                                     name="password2"
                                     placeholder={t("register.confirmPassword")}
+                                    autoComplete="off"
                                     required />
                             </div>
                             {errors.password2 && touched.password2 &&
@@ -89,17 +108,5 @@ function SignUpForm() {
     )
 }
 
-const signUpSchema = Yup.object().shape({
-    username: Yup.string()
-        .required("Обязательное поле")
-        .min(3, "От 3 до 20 символов")
-        .max(20, "От 3 до 20 символов"),
-    password: Yup.string()
-        .required("Обязательное поле")
-        .min(6, "Не менее 6 символов"),
-    password2: Yup.string()
-        .required("")
-        .oneOf([Yup.ref('password'), null], 'Пароли должны совпадать'),
-});
 
 export default SignUpForm;

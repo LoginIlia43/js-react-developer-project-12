@@ -4,6 +4,7 @@ import socket from "../socket.js";
 import { useSelector } from "react-redux";
 import { useEffect } from "react";
 import { useTranslation } from "react-i18next";
+import { notifyError } from "../notify.js";
 
 function MessageForm() {
     const username = localStorage.getItem("username");
@@ -26,7 +27,7 @@ function MessageForm() {
                         ({ "message": message.message, "username": username, "channelId": currentChannelId }),
                         ({ status }) => {
                             if (status !== "ok") {
-                                console.log("Error with sending new message");
+                                notifyError(t("errors.connection"));
                             };
                     });
                     setSubmitting(false);
@@ -42,6 +43,7 @@ function MessageForm() {
                                 type="text"
                                 name="message"
                                 placeholder={t("mainP.messageInput")}
+                                autoComplete="off"
                                 required />
                             <Button type="submit" disabled={isSubmitting}>
                                 {t("mainP.sendBtn")}
@@ -53,5 +55,6 @@ function MessageForm() {
         </div>
     );
 }
+
 
 export default MessageForm;
