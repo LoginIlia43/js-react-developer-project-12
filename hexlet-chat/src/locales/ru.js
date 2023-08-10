@@ -1,4 +1,4 @@
-export default {
+const ru = {
     translation: {
         login: {
             header: "Войти",
@@ -45,3 +45,5 @@ export default {
         },
     }
 };
+
+export default ru;
