@@ -10,6 +10,13 @@ import resources from './locales/index.js';
 
 import store from './slices/index.js';
 
+import { Provider as RollbarProvider, ErrorBoundary } from '@rollbar/react';
+
+const rollbarConfig = {
+  accessToken: 'd11e4e6f650f412381eeee81e299e420',
+  environment: 'testenv',
+};
+
 const init = async () => {
   const i18n = i18next.createInstance();
 
@@ -21,11 +28,15 @@ const init = async () => {
     });
 
   return (
-    <I18nextProvider i18n={i18n}>
-      <Provider store={store}>
-        <App />
-      </Provider>
-    </I18nextProvider>
+    <RollbarProvider config={rollbarConfig}>
+      <ErrorBoundary>
+        <I18nextProvider i18n={i18n}>
+          <Provider store={store}>
+            <App />
+          </Provider>
+        </I18nextProvider>
+      </ErrorBoundary>
+    </RollbarProvider>
   );
 };
 
