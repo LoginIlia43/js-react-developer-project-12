@@ -1,4 +1,5 @@
 import { useSelector } from "react-redux";
+import filter from "leo-profanity";
 
 function Message(props) {
     const { id } = props;
@@ -7,7 +8,7 @@ function Message(props) {
     return (
         <div key={id} className="d-flex gap-2">
             <b>{username}:</b>
-            <p className="text-break">{message}</p>
+            <p className="text-break">{filter.clean(message)}</p>
         </div>
     )
 }
