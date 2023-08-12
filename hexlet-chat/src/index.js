@@ -1,16 +1,13 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import App from './components/App';
+import { Provider as RollbarProvider, ErrorBoundary } from '@rollbar/react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { Provider } from 'react-redux';
-
 import i18next from 'i18next';
 import { I18nextProvider, initReactI18next } from 'react-i18next';
-import resources from './locales/index.js';
-
 import store from './slices/index.js';
-
-import { Provider as RollbarProvider, ErrorBoundary } from '@rollbar/react';
+import resources from './locales/index.js';
+import App from './components/App';
 
 const rollbarConfig = {
   accessToken: 'd11e4e6f650f412381eeee81e299e420',

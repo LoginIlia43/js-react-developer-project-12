@@ -1,28 +1,28 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
-    isShow: false,
-    type: "",
-    channelId: null,
+  isShow: false,
+  type: '',
+  channelId: null,
 };
 
 const modalSlice = createSlice({
-    name: 'modal',
-    initialState,
-    reducers: {
-        setType:
+  name: 'modal',
+  initialState,
+  reducers: {
+    setType:
             (state, { payload }) => {
-                state.type = payload;
+              state.type = payload;
             },
-        setId:
+    setId:
             (state, { payload }) => {
-                state.channelId = payload;
+              state.channelId = payload;
             },
-        toggleIsShow:
+    toggleIsShow:
             (state) => {
-                state.isShow = !state.isShow;
+              state.isShow = !state.isShow;
             },
-    },
+  },
 });
 
 export const { actions } = modalSlice;

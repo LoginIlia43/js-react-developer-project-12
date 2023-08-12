@@ -1,18 +1,18 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
-    mainPageState: 'chat',
+  mainPageState: 'chat',
 };
 
 const mainPageSlice = createSlice({
-    name: 'mainPage',
-    initialState,
-    reducers: {
-        setState:
+  name: 'mainPage',
+  initialState,
+  reducers: {
+    setState:
             (state, { payload }) => {
-                state.mainPageState = payload;
+              state.mainPageState = payload;
             },
-    },
+  },
 });
 
 export const { actions } = mainPageSlice;
