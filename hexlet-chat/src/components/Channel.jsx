@@ -49,12 +49,11 @@ function Channel(props) {
                 # {name}
             </ToggleButton>
             {removable ?
-                <DropdownButton 
-                    as={ButtonGroup}
-                    size="sm"
-                    title=""
-                    variant={isActiveChannel ? "secondary rounded-0" : "shadow rounded-0"}>
-                    <span className="visually-hidden">Управление каналом</span>
+                <DropdownButton
+                as={ButtonGroup}
+                size="sm"
+                title="Управление каналом"
+                variant={isActiveChannel ? "secondary rounded-0" : "shadow rounded-0"}>
                     <Dropdown.Item
                         onClick={handleRemove}
                     >
@@ -66,7 +65,6 @@ function Channel(props) {
                         Переименовать
                     </Dropdown.Item>
                 </DropdownButton> : null}
-
         </ButtonGroup>
     );
 }
