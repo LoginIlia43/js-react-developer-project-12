@@ -16,8 +16,6 @@ import { actions as messagesActions } from "../slices/messagesSlice";
 import { actions as currentChannelIdActions } from "../slices/channelIdSlice";
 
 import { ToastContainer } from 'react-toastify';
-import filter from "leo-profanity";
-
 
 function App() {
   const dispatch = useDispatch();

@@ -54,6 +54,7 @@ function Channel(props) {
                     size="sm"
                     title=""
                     variant={isActiveChannel ? "secondary rounded-0" : "shadow rounded-0"}>
+                    <span className="visually-hidden">Управление каналом</span>
                     <Dropdown.Item
                         onClick={handleRemove}
                     >

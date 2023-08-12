@@ -86,6 +86,7 @@ function ModalAddChannel(props) {
                                 autoFocus
                                 />
                             {errors.channel && touched.channel && <div className="text-danger pt-3">{errors.channel}</div>}
+                            <label className="visually-hidden" htmlFor="channel">Имя канала</label>
                             <div className="d-flex gap-2 justify-content-end mt-3">
                                 <Button
                                     variant="secondary"
@@ -154,6 +155,7 @@ function ModalRenameChannel(props) {
                                 required
                                 autoFocus
                             />
+                            <label className="visually-hidden" htmlFor="name">Имя канала</label>
                             {errors.name && touched.name && <div className="text-danger pt-3">{errors.name}</div>}
                             <div className="d-flex gap-2 justify-content-end mt-3">
                                 <Button variant="secondary" onClick={handleClose}>Отменить</Button>
@@ -198,6 +200,7 @@ function ModalRemoveChannel(props) {
                             <div className="d-flex gap-2 justify-content-end mt-3">
                                 <Button variant="secondary" onClick={handleClose}>Отменить</Button>
                                 <Button
+                                    className="btn-danger"
                                     variant="primary"
                                     type="submit"
                                     disabled={isSubmitting}
