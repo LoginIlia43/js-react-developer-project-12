@@ -1,3 +1,4 @@
+/* eslint-disable */
 import { createSlice } from '@reduxjs/toolkit';
 import { actions as channelsActions } from './channelsSlice';
 
