@@ -1,20 +1,16 @@
-import React, { useContext, useEffect } from "react";
-import AuthContext from "../components/AuthContext";
+import React, { useContext, useEffect } from 'react';
+import Button from 'react-bootstrap/esm/Button';
+import { useNavigate } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import AuthContext from '../components/AuthContext';
+import Channels from '../components/Channels';
+import Messages from '../components/Messages';
+import MessageForm from '../components/MessageForm';
+import ModalComponent from '../components/ModalComponent';
+import { actions as modalActions } from '../slices/modalSlice';
+import HeaderComponent from '../components/HeaderComponent';
 
-import Button from "react-bootstrap/esm/Button";
-
-import { useNavigate } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
-
-import Channels from "../components/Channels";
-import Messages from "../components/Messages";
-import MessageForm from "../components/MessageForm";
-import ModalComponent from "../components/ModalComponent";
-
-import { actions as modalActions } from "../slices/modalSlice";
-import HeaderComponent from "../components/HeaderComponent";
-
-function MainPage(props) {
+const MainPage = (props) => {
   const { fetchData } = props;
   const { isAuthorized } = useContext(AuthContext);
   const navigate = useNavigate();
@@ -22,7 +18,7 @@ function MainPage(props) {
 
   useEffect(() => {
     if (!isAuthorized) {
-      navigate("/login");
+      navigate('/login');
     } else {
       fetchData();
     }
@@ -38,7 +34,7 @@ function MainPage(props) {
 
   const handleAddChannel = () => {
     dispatch(modalActions.toggleIsShow());
-    dispatch(modalActions.setType("addChannel"));
+    dispatch(modalActions.setType('addChannel'));
   };
 
   return (
@@ -51,7 +47,7 @@ function MainPage(props) {
             <div
               id="channels-container"
               className="col-4 h-100 border-end py-3 overflow-y-auto"
-              style={{ maxWidth: "260px" }}
+              style={{ maxWidth: '260px' }}
             >
               <div className="d-flex justify-content-between">
                 <p>Каналы</p>

@@ -1,8 +1,8 @@
-import React from "react";
-import SignUpForm from "../components/SignUpForm";
-import HeaderComponent from "../components/HeaderComponent";
+import React from 'react';
+import SignUpForm from '../components/SignUpForm';
+import HeaderComponent from '../components/HeaderComponent';
 
-function SignUpPage() {
+const SignUpPage = () => {
   return (
     <div className="h-100 d-flex flex-column">
       <HeaderComponent />

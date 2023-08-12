@@ -1,17 +1,14 @@
-import { useDispatch, useSelector } from "react-redux";
-import socket from "../socket";
-import * as Yup from "yup";
+import { useDispatch, useSelector } from 'react-redux';
+import * as Yup from 'yup';
+import Modal from 'react-bootstrap/esm/Modal';
+import Button from 'react-bootstrap/esm/Button';
+import { Formik, Form, Field } from 'formik';
+import { useTranslation } from 'react-i18next';
+import { notifySuccess } from '../notify.js';
+import { actions as modalActions } from '../slices/modalSlice';
+import socket from '../socket';
 
-import Modal from "react-bootstrap/esm/Modal";
-import Button from "react-bootstrap/esm/Button";
-import { Formik, Form, Field } from "formik";
-
-import { actions as modalActions } from "../slices/modalSlice";
-
-import { useTranslation } from "react-i18next";
-import { notifySuccess } from "../notify.js";
-
-function ModalComponent() {
+const ModalComponent = () => {
   const modalType = useSelector((state) => state.modal.type);
   const isShow = useSelector((state) => state.modal.isShow);
   const dispatch = useDispatch();
@@ -19,9 +16,9 @@ function ModalComponent() {
   const handleClose = () => dispatch(modalActions.toggleIsShow());
 
   const titles = {
-    addChannel: "Добавить канал",
-    renameChannel: "Переименовать канал",
-    removeChannel: "Удалить канал",
+    addChannel: 'Добавить канал',
+    renameChannel: 'Переименовать канал',
+    removeChannel: 'Удалить канал',
   };
 
   const dispatchModalChildren = {
@@ -40,7 +37,7 @@ function ModalComponent() {
   );
 }
 
-function ModalAddChannel(props) {
+const ModalAddChannel = (props) => {
   const { t } = useTranslation();
 
   const { handleClose } = props;
@@ -50,28 +47,28 @@ function ModalAddChannel(props) {
 
   const channelSchema = Yup.object().shape({
     channel: Yup.string()
-      .required("")
-      .min(3, t("validation.from3to20"))
-      .max(20, t("validation.from3to20"))
-      .notOneOf([...channels, null], t("validation.unique")),
+      .required('')
+      .min(3, t('validation.from3to20'))
+      .max(20, t('validation.from3to20'))
+      .notOneOf([...channels, null], t('validation.unique')),
   });
 
   return (
     <>
       <Formik
         initialValues={{
-          channel: "",
+          channel: '',
         }}
         validationSchema={channelSchema}
         onSubmit={({ channel }, { setSubmitting, resetForm }) => {
-          socket.emit("newChannel", {
+          socket.emit('newChannel', {
             name: channel,
-            author: localStorage.getItem("username"),
+            author: localStorage.getItem('username'),
           });
           setSubmitting(false);
           resetForm();
           handleClose();
-          notifySuccess(t("notify.add"));
+          notifySuccess(t('notify.add'));
         }}
       >
         {({ errors, touched, isSubmitting }) => {
@@ -81,9 +78,10 @@ function ModalAddChannel(props) {
                 Имя канала
               </label>
               <Field
+                id="channel"
                 className="form-control"
                 type="text"
-                placeholder={t("mainP.channelNameInput")}
+                placeholder={t('mainP.channelNameInput')}
                 name="channel"
                 required
                 autoComplete="off"
@@ -108,7 +106,7 @@ function ModalAddChannel(props) {
   );
 }
 
-function ModalRenameChannel(props) {
+const ModalRenameChannel = (props) => {
   const { t } = useTranslation();
 
   const { handleClose } = props;
@@ -120,25 +118,25 @@ function ModalRenameChannel(props) {
 
   const channelSchema = Yup.object().shape({
     name: Yup.string()
-      .required(t("validation.required"))
-      .min(3, t("validation.from3to20"))
-      .max(20, t("validation.from3to20"))
-      .notOneOf(channels, t("validation.unique")),
+      .required(t('validation.required'))
+      .min(3, t('validation.from3to20'))
+      .max(20, t('validation.from3to20'))
+      .notOneOf(channels, t('validation.unique')),
   });
 
   return (
     <>
       <Formik
         initialValues={{
-          name: "",
+          name: '',
         }}
         validationSchema={channelSchema}
         onSubmit={({ name }, { setSubmitting, resetForm }) => {
-          socket.emit("renameChannel", { id: id, name: name });
+          socket.emit('renameChannel', { id: id, name: name });
           setSubmitting(false);
           resetForm();
           handleClose();
-          notifySuccess(t("notify.rename"));
+          notifySuccess(t('notify.rename'));
         }}
       >
         {({ errors, touched, isSubmitting }) => {
@@ -151,7 +149,7 @@ function ModalRenameChannel(props) {
                 id="name"
                 className="form-control"
                 type="text"
-                placeholder={t("mainP.channelNameInput")}
+                placeholder={t('mainP.channelNameInput')}
                 name="name"
                 autoComplete="off"
                 required
@@ -176,7 +174,7 @@ function ModalRenameChannel(props) {
   );
 }
 
-function ModalRemoveChannel(props) {
+const ModalRemoveChannel = (props) => {
   const { handleClose } = props;
   const { t } = useTranslation();
   const id = useSelector((state) => state.modal.channelId);
@@ -188,10 +186,10 @@ function ModalRemoveChannel(props) {
           id,
         }}
         onSubmit={({ id }, { setSubmitting }) => {
-          socket.emit("removeChannel", { id: id });
+          socket.emit('removeChannel', { id: id });
           setSubmitting(false);
           handleClose();
-          notifySuccess(t("notify.remove"));
+          notifySuccess(t('notify.remove'));
         }}
       >
         {({ isSubmitting }) => {

@@ -1,8 +1,8 @@
-import AuthContext from "./AuthContext";
-import { useState } from "react";
+import { useState } from 'react';
+import AuthContext from './AuthContext';
 
 const AuthProvider = ({ children }) => {
-  const isTokenExist = Boolean(localStorage.getItem("userToken"));
+  const isTokenExist = Boolean(localStorage.getItem('userToken'));
   const [isAuthorized, setIsAuthorized] = useState(isTokenExist);
 
   const setAuthorized = () => setIsAuthorized(true);

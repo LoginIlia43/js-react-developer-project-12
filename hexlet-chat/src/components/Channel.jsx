@@ -1,19 +1,14 @@
-import ToggleButton from "react-bootstrap/ToggleButton";
-import ButtonGroup from "react-bootstrap/esm/ButtonGroup";
-import DropdownButton from "react-bootstrap/esm/DropdownButton";
-import Dropdown from "react-bootstrap/Dropdown";
+import ToggleButton from 'react-bootstrap/ToggleButton';
+import ButtonGroup from 'react-bootstrap/esm/ButtonGroup';
+import DropdownButton from 'react-bootstrap/esm/DropdownButton';
+import Dropdown from 'react-bootstrap/Dropdown';
+import { useSelector, useDispatch } from 'react-redux';
+import { actions as channelIdActions } from '../slices/channelIdSlice';
+import { actions as modalActions } from '../slices/modalSlice';
 
-import { useSelector } from "react-redux";
-import { actions as channelIdActions } from "../slices/channelIdSlice";
-import { useDispatch } from "react-redux";
-
-import { actions as modalActions } from "../slices/modalSlice";
-
-function Channel(props) {
+const Channel = (props) => {
   const { id } = props;
-  const { name, removable } = useSelector(
-    (state) => state.channels.entities[id]
-  );
+  const { name, removable } = useSelector((state) => state.channels.entities[id]);
 
   const { currentChannelId } = useSelector((state) => state.currentChannelId);
   const isActiveChannel = id === currentChannelId;
@@ -23,21 +18,19 @@ function Channel(props) {
     dispatch(channelIdActions.setCurrentChannelId(id));
   };
 
-  const handleRename = () => {
-    return setTimeout(() => {
+  const handleRename = () =>
+    setTimeout(() => {
       dispatch(modalActions.toggleIsShow());
-      dispatch(modalActions.setType("renameChannel"));
+      dispatch(modalActions.setType('renameChannel'));
       dispatch(modalActions.setId(id));
     }, 10);
-  };
 
-  const handleRemove = () => {
-    return setTimeout(() => {
+  const handleRemove = () =>
+    setTimeout(() => {
       dispatch(modalActions.toggleIsShow());
-      dispatch(modalActions.setType("removeChannel"));
+      dispatch(modalActions.setType('removeChannel'));
       dispatch(modalActions.setId(id));
     });
-  };
 
   return (
     <ButtonGroup id={id}>
@@ -48,14 +41,14 @@ function Channel(props) {
         checked={isActiveChannel}
         onClick={handleClick}
       >
-        # {name}
+        {`# ${name}`}
       </ToggleButton>
       {removable ? (
         <DropdownButton
           as={ButtonGroup}
           size="sm"
           title="Управление каналом"
-          variant={isActiveChannel ? "secondary rounded-0" : "shadow rounded-0"}
+          variant={isActiveChannel ? 'secondary rounded-0' : 'shadow rounded-0'}
         >
           <Dropdown.Item onClick={handleRemove}>Удалить</Dropdown.Item>
           <Dropdown.Item onClick={handleRename}>Переименовать</Dropdown.Item>
@@ -63,6 +56,6 @@ function Channel(props) {
       ) : null}
     </ButtonGroup>
   );
-}
+};
 
 export default Channel;

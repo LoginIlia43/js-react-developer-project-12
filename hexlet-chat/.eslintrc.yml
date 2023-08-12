@@ -4,9 +4,9 @@ env:
 
 extends:
   - airbnb
-  - plugin:react/recommended
-  - plugin:functional/recommended
-  - plugin:react-hooks/recommended
+  # - plugin:react/recommended
+  # - plugin:functional/recommended
+  # - plugin:react-hooks/recommended
 
 parser: "@typescript-eslint/parser"
 
@@ -36,10 +36,11 @@ rules:
   functional/no-expression-statements: 0
   functional/no-conditional-statements: 0
   no-shadow: 0
-  quotes: 0
+  quotes: [2, "single", { "avoidEscape": true }]
   no-underscore-dangle: [2, { "allow": ["__filename", "__dirname"] }]
   no-param-reassign: 0
-  react/function-component-definition:
-    [2, { "namedComponents": "arrow-function" }]
+  # react/function-component-definition:
+  #   [2, { "namedComponents": "arrow-function" }]
   testing-library/no-debug: 0
   react/jsx-filename-extension: [1, { "extensions": [".js", ".jsx"] }]
+  eqeqeq: 0

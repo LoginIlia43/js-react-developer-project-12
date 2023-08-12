@@ -1,39 +1,39 @@
-import { Formik, Form, Field } from "formik";
-import Button from "react-bootstrap/esm/Button";
-import socket from "../socket.js";
-import { useSelector } from "react-redux";
-import { useEffect } from "react";
-import { useTranslation } from "react-i18next";
-import { notifyError } from "../notify.js";
+import { Formik, Form, Field } from 'formik';
+import Button from 'react-bootstrap/esm/Button';
+import { useSelector } from 'react-redux';
+import { useEffect } from 'react';
+import { useTranslation } from 'react-i18next';
+import { notifyError } from '../notify.js';
+import socket from '../socket.js';
 
-function MessageForm() {
-  const username = localStorage.getItem("username");
+const MessageForm = () => {
+  const username = localStorage.getItem('username');
   const { currentChannelId } = useSelector((state) => state.currentChannelId);
   const { t } = useTranslation();
 
   useEffect(() => {
-    document.getElementById("message-form-input").focus();
+    document.getElementById('message-form-input').focus();
   }, [currentChannelId]);
 
   return (
     <div className="d-flex gap-2">
       <Formik
         initialValues={{
-          message: "",
+          message: '',
         }}
         onSubmit={(message, { setSubmitting, resetForm }) => {
           socket.emit(
-            "newMessage",
+            'newMessage',
             {
               message: message.message,
               username: username,
               channelId: currentChannelId,
             },
             ({ status }) => {
-              if (status !== "ok") {
-                notifyError(t("errors.connection"));
+              if (status !== 'ok') {
+                notifyError(t('errors.connection'));
               }
-            }
+            },
           );
           setSubmitting(false);
           resetForm();
@@ -48,11 +48,11 @@ function MessageForm() {
                 type="text"
                 name="message"
                 aria-label="Новое сообщение"
-                placeholder={t("mainP.messageInput")}
+                placeholder={t('mainP.messageInput')}
                 autoComplete="off"
               />
               <Button type="submit" disabled={isSubmitting || !dirty}>
-                {t("mainP.sendBtn")}
+                {t('mainP.sendBtn')}
               </Button>
             </div>
           </Form>

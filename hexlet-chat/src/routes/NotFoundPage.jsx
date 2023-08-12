@@ -1,9 +1,9 @@
-import Button from "react-bootstrap/esm/Button";
-import { useNavigate } from "react-router-dom";
+import Button from 'react-bootstrap/esm/Button';
+import { useNavigate } from 'react-router-dom';
 
-function NotFoundPage() {
+const NotFoundPage = () => {
   const navigate = useNavigate();
-  const HandleClick = () => navigate("/");
+  const HandleClick = () => navigate('/');
 
   return (
     <div className="row vh-100 align-items-center">

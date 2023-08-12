@@ -1,11 +1,11 @@
-import { useEffect } from "react";
-import Message from "./Message";
+import { useEffect } from 'react';
+import Message from './Message';
 
-function Messages(props) {
+const Messages = (props) => {
   const { messages } = props;
 
   useEffect(() => {
-    const messagesContainer = document.getElementById("messages-container");
+    const messagesContainer = document.getElementById('messages-container');
     const sH = messagesContainer.scrollHeight;
     messagesContainer.scrollTo(0, sH);
   }, [messages]);
