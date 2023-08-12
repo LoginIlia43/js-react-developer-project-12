@@ -10,38 +10,36 @@ const messagesSlice = createSlice({
   name: 'messages',
   initialState,
   reducers: {
-    setMessages:
-            (state, { payload }) => {
-              const normalizedMessages = {};
-              const ids = [];
+    setMessages: (state, { payload }) => {
+      const normalizedMessages = {};
+      const ids = [];
 
-              payload.forEach(({
-                message, username, channelId, id,
-              }) => {
-                normalizedMessages[id] = {
-                  id,
-                  message,
-                  username,
-                  channelId,
-                };
-                ids.push(id);
-              });
-              state.entities = normalizedMessages;
-              state.ids = ids;
-            },
-    addMessage:
-            (state, { payload }) => {
-              const {
-                id, message, username, channelId,
-              } = payload;
-              state.entities[id] = {
-                id,
-                message,
-                username,
-                channelId,
-              };
-              state.ids.push(id);
-            },
+      payload.forEach(({
+        message, username, channelId, id,
+      }) => {
+        normalizedMessages[id] = {
+          id,
+          message,
+          username,
+          channelId,
+        };
+        ids.push(id);
+      });
+      state.entities = normalizedMessages;
+      state.ids = ids;
+    },
+    addMessage: (state, { payload }) => {
+      const {
+        id, message, username, channelId,
+      } = payload;
+      state.entities[id] = {
+        id,
+        message,
+        username,
+        channelId,
+      };
+      state.ids.push(id);
+    },
   },
   extraReducers: (builder) => {
     builder.addCase(channelsActions.removeChannel, (state, { payload }) => {

@@ -8,10 +8,9 @@ const mainPageSlice = createSlice({
   name: 'mainPage',
   initialState,
   reducers: {
-    setState:
-            (state, { payload }) => {
-              state.mainPageState = payload;
-            },
+    setState: (state, { payload }) => {
+      state.mainPageState = payload;
+    },
   },
 });
 
