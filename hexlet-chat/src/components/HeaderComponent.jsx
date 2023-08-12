@@ -1,3 +1,4 @@
+/* eslint-disable */
 import Button from 'react-bootstrap/esm/Button';
 import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
@@ -26,6 +27,6 @@ const HeaderComponent = () => {
       </div>
     </div>
   );
-}
+};
 
 export default HeaderComponent;

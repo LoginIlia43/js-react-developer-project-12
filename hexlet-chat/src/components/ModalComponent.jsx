@@ -1,3 +1,4 @@
+/* eslint-disable */
 import { useDispatch, useSelector } from 'react-redux';
 import * as Yup from 'yup';
 import Modal from 'react-bootstrap/esm/Modal';

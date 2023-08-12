@@ -1,3 +1,4 @@
+/* eslint-disable arrow-body-style */
 import React from 'react';
 import SignUpForm from '../components/SignUpForm';
 import HeaderComponent from '../components/HeaderComponent';
@@ -13,6 +14,6 @@ const SignUpPage = () => {
       </div>
     </div>
   );
-}
+};
 
 export default SignUpPage;

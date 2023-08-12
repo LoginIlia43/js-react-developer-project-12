@@ -24,13 +24,9 @@ const MainPage = (props) => {
     }
   }, [fetchData, isAuthorized, navigate]);
 
-  const messages = useSelector((state) =>
-    Object.values(state.messages.entities)
-  );
+  const messages = useSelector((state) => Object.values(state.messages.entities));
   const { currentChannelId } = useSelector((state) => state.currentChannelId);
-  const currentChannelMessages = messages.filter(
-    (msg) => msg.channelId === currentChannelId
-  );
+  const currentChannelMessages = messages.filter((msg) => msg.channelId === currentChannelId);
 
   const handleAddChannel = () => {
     dispatch(modalActions.toggleIsShow());
@@ -75,6 +71,6 @@ const MainPage = (props) => {
       </div>
     </>
   );
-}
+};
 
 export default MainPage;

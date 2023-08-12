@@ -25,8 +25,8 @@ const MessageForm = () => {
           socket.emit(
             'newMessage',
             {
+              username,
               message: message.message,
-              username: username,
               channelId: currentChannelId,
             },
             ({ status }) => {
@@ -60,6 +60,6 @@ const MessageForm = () => {
       </Formik>
     </div>
   );
-}
+};
 
 export default MessageForm;

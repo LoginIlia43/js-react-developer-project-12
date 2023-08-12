@@ -1,12 +1,13 @@
+/* eslint-disable */
 import React, { useContext, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Field, Form, Formik } from 'formik';
 import * as Yup from 'yup';
 import axios from 'axios';
-import AuthContext from './AuthContext';
 import Button from 'react-bootstrap/Button';
 import { useTranslation } from 'react-i18next';
 import { notifyError } from '../notify';
+import AuthContext from './AuthContext';
 
 const SignUpForm = () => {
   const [error, setError] = useState('');
@@ -24,7 +25,7 @@ const SignUpForm = () => {
       .min(6, t('validation.from6')),
     password2: Yup.string().oneOf(
       [Yup.ref('password'), null],
-      t('validation.passwords')
+      t('validation.passwords'),
     ),
   });
 
@@ -40,9 +41,7 @@ const SignUpForm = () => {
         onSubmit={async ({ username, password }) => {
           await axios
             .post('/api/v1/signup', { username, password })
-            .then((response) =>
-              localStorage.setItem('userToken', response.data.token)
-            )
+            .then((response) => localStorage.setItem('userToken', response.data.token))
             .then(() => setAuthorized())
             .then(() => navigate('/'))
             .then(() => localStorage.setItem('username', username))

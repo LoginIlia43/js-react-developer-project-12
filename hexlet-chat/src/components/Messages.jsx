@@ -17,6 +17,6 @@ const Messages = (props) => {
       ))}
     </div>
   );
-}
+};
 
 export default Messages;

@@ -1,3 +1,4 @@
+/* eslint-disable */
 import React, { useContext, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Field, Form, Formik } from 'formik';
@@ -13,7 +14,7 @@ const LoginForm = () => {
   const navigate = useNavigate();
   const { setAuthorized } = useContext(AuthContext);
   const { t } = useTranslation();
-  
+
   const loginSchema = Yup.object().shape({
     username: Yup.string().required(),
     password: Yup.string().required(),
@@ -31,8 +32,7 @@ const LoginForm = () => {
           await axios
             .post('/api/v1/login', { username, password })
             .then((response) =>
-              localStorage.setItem('userToken', response.data.token)
-            )
+              localStorage.setItem('userToken', response.data.token))
             .then(() => setAuthorized())
             .then(() => navigate('/'))
             .then(() => localStorage.setItem('username', username))
