@@ -36,6 +36,7 @@ rules:
   functional/no-expression-statements: 0
   functional/no-conditional-statements: 0
   no-shadow: 0
+  quotes: 0
   no-underscore-dangle: [2, { "allow": ["__filename", "__dirname"] }]
   no-param-reassign: 0
   react/function-component-definition:
