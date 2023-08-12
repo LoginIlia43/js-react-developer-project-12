@@ -1,4 +1,4 @@
-/* eslint-disable implicit-arrow-linebreak*/
+/* eslint-disable implicit-arrow-linebreak */
 import ToggleButton from 'react-bootstrap/ToggleButton';
 import ButtonGroup from 'react-bootstrap/esm/ButtonGroup';
 import DropdownButton from 'react-bootstrap/esm/DropdownButton';
