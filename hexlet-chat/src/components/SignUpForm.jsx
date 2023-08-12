@@ -66,7 +66,12 @@ function SignUpForm() {
                                     autoComplete="off"
                                     autoFocus
                                     required />
-                                <label class="form-label d-none" for="username">{t("register.username")}</label>
+                                <label
+                                    className="form-label d-none"
+                                    htmlFor="username"
+                                >
+                                    {t("register.username")}
+                                </label>
                             </div>
                             {errors.username && touched.username && 
                                 <div className="text-danger">{errors.username}</div>}
@@ -79,7 +84,7 @@ function SignUpForm() {
                                     placeholder={t("register.password")}
                                     autoComplete="off"
                                     required />
-                                <label class="form-label d-none" for="password">{t("register.password")}</label>
+                                <label className="form-label d-none" htmlFor="password">{t("register.password")}</label>
                             </div>
                             {errors.password && touched.password &&
                                 <div className="text-danger">{errors.password}</div>}
@@ -92,7 +97,7 @@ function SignUpForm() {
                                     placeholder={t("register.confirmPassword")}
                                     autoComplete="off"
                                     required />
-                                <label class="form-label d-none" for="password2">{t("register.confirmPassword")}</label>
+                                <label className="form-label d-none" htmlFor="password2">{t("register.confirmPassword")}</label>
                             </div>
                             {errors.password2 && touched.password2 &&
                                 <div className="text-danger">{errors.password2}</div>}

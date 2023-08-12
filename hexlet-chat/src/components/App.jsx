@@ -21,7 +21,6 @@ import filter from "leo-profanity";
 
 function App() {
   const dispatch = useDispatch();
-  filter.loadDictionary("ru");
 
 socket.on('newMessage', (message) => {
   dispatch(messagesActions.addMessage(message));

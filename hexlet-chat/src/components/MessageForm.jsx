@@ -34,7 +34,7 @@ function MessageForm() {
                     resetForm();
                 }}
             >
-                {({ isSubmitting }) => (
+                {({ isSubmitting, dirty }) => (
                     <Form className="w-100">
                         <div className="d-flex gap-2">
                             <Field
@@ -42,10 +42,11 @@ function MessageForm() {
                                 className="w-100 flex-grow-1 px-2 border rounded-3"
                                 type="text"
                                 name="message"
+                                aria-label="Новое сообщение"
                                 placeholder={t("mainP.messageInput")}
                                 autoComplete="off"
-                                required />
-                            <Button type="submit" disabled={isSubmitting}>
+                            />
+                            <Button type="submit" disabled={isSubmitting || !dirty}>
                                 {t("mainP.sendBtn")}
                             </Button>
                         </div>

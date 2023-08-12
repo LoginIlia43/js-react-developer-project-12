@@ -85,7 +85,6 @@ function ModalAddChannel(props) {
                                 autoComplete="off"
                                 autoFocus
                                 />
-                                {console.log(touched.channel)}
                             {errors.channel && touched.channel && <div className="text-danger pt-3">{errors.channel}</div>}
                             <div className="d-flex gap-2 justify-content-end mt-3">
                                 <Button
@@ -131,7 +130,6 @@ function ModalRenameChannel(props) {
     return (
         <>
             <Formik
-            autoFocus={false}
             initialValues={{
                 name:"",
             }}
@@ -146,7 +144,7 @@ function ModalRenameChannel(props) {
             >
                 {({ errors, touched, isSubmitting }) => {
                     return (
-                        <Form id="channel-rename-form" autoFocus={false}>
+                        <Form id="channel-rename-form">
                             <Field
                                 className="form-control"
                                 type="text"
@@ -203,6 +201,7 @@ function ModalRemoveChannel(props) {
                                     variant="primary"
                                     type="submit"
                                     disabled={isSubmitting}
+                                    autoFocus
                                 >
                                     Подтвердить
                                 </Button>

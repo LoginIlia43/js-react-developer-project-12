@@ -50,7 +50,7 @@ function LoginForm() {
                                     placeholder={t("login.username")}
                                     required
                                     autoFocus />
-                                <label class="form-label" for="username">{t("login.username")}</label>
+                                <label className="form-label d-none" htmlFor="username">{t("login.username")}</label>
                             </div>
                             <div className="py-2">
                                 <Field
@@ -60,7 +60,7 @@ function LoginForm() {
                                     name="password"
                                     placeholder={t("login.password")}
                                     required />
-                                <label class="form-label" for="password">{t("login.password")}</label>
+                                <label className="form-label d-none" htmlFor="password">{t("login.password")}</label>
 
                             </div>
                             {error ? <p className="text-danger my-0">{error}</p> : null}

@@ -22,16 +22,19 @@ function Channel(props) {
     };
 
     const handleRename = () => {
-        dispatch(modalActions.toggleIsShow());
-        dispatch(modalActions.setType("renameChannel"));
-        dispatch(modalActions.setId(id));
+        return setTimeout(() => {
+            dispatch(modalActions.toggleIsShow());
+            dispatch(modalActions.setType("renameChannel"));
+            dispatch(modalActions.setId(id));
+        }, 10);
     };
 
     const handleRemove = () => {
-        dispatch(modalActions.toggleIsShow());
-        dispatch(modalActions.setType("removeChannel"));
-        dispatch(modalActions.setId(id));
-
+        return setTimeout(() => {
+            dispatch(modalActions.toggleIsShow());
+            dispatch(modalActions.setType("removeChannel"));
+            dispatch(modalActions.setId(id));
+        });
     };
 
     return (
